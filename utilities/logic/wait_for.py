@@ -88,7 +88,7 @@ options:
     version_added: "1.4"
     required: false
     description:
-      - path to a file on the filesytem that must exist before continuing
+      - path to a file on the filesystem that must exist before continuing
   search_regex:
     version_added: "1.4"
     required: false
@@ -331,6 +331,8 @@ def main():
 
     if port and path:
         module.fail_json(msg="port and path parameter can not both be passed to wait_for")
+    if not port and not path:
+        module.fail_json(msg="one of port or path must be passed to wait_for")
     if path and state == 'stopped':
         module.fail_json(msg="state=stopped should only be used for checking a port in the wait_for module")
     if path and state == 'drained':
